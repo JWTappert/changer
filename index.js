@@ -1,4 +1,5 @@
-function sum(a, b) {
-	return a + b;
+function makeChange(amount, tendered) {
+	let change = tendered - amount;
+	return change;
 }
-module.exports = sum;
+module.exports = makeChange;

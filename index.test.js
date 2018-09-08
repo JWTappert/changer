@@ -1,5 +1,5 @@
-const sum = require("./index");
+const makeChange = require("./index");
 
-test("adds 1 + 2 to equal 3", () => {
-	expect(sum(1, 2)).toBe(3);
+test("amount is $2.75, tendered is $5, result should be $2.25", () => {
+	expect(makeChange(2.75, 5)).toBe(2.25);
 });
