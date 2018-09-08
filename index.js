@@ -15,6 +15,7 @@ const changer = {
 	coins: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
 	makeChange(amount, tendered) {
+		if (amount < 0 || tendered < 0) return 0;
 		this.clearCoins();
 		let change = this.calculateDifference(amount, tendered);
 		let totalPennies = this.toPennies(change);
@@ -51,11 +52,12 @@ const changer = {
 	},
 
 	calculateDifference(amount, tendered) {
+		if (amount < 0 || tendered < 0) return 0;
 		return tendered - amount;
 	},
 
 	toPennies(amount) {
-		return amount * 100;
+		return amount > 0 ? amount * 100 : 0;
 	},
 
 	remainingPenniesCanBeSplit(i, pennies) {
