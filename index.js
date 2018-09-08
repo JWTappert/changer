@@ -15,22 +15,28 @@ const changer = {
 	coins: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
 	makeChange(amount, tendered) {
+		this.clearCoins();
 		let change = this.calculateDifference(amount, tendered);
 		let totalPennies = this.toPennies(change);
 		return this.calculateCoins(totalPennies);
 	},
 
 	calculateCoins(pennies) {
-		if (pennies == 0) return coins;
-		// while (pennies > 0) {
 		for (let i = 9; i >= 0; i--) {
-			if (pennies - this.denoms[i][1] >= 0) {
-				console.log(pennies - this.denoms[i][1]);
-				this.coins[i]++;
+			if (this.remainingPenniesCanBeSplit(i, pennies)) {
+				while (this.remainingPenniesCanBeSplit(i, pennies)) {
+					pennies = this.calculateDifference(this.denoms[i][1], pennies);
+					this.coins[i]++;
+				}
 			}
-			// this.calculateCoins(pennies);
 		}
-		// }
+		return this.coins;
+	},
+
+	convertToString() {
+		this.coins.forEach(count => {
+			console.log(count);
+		});
 	},
 
 	calculateDifference(amount, tendered) {
@@ -39,6 +45,14 @@ const changer = {
 
 	toPennies(amount) {
 		return amount * 100;
+	},
+
+	remainingPenniesCanBeSplit(i, pennies) {
+		return this.calculateDifference(this.denoms[i][1], pennies) >= 0;
+	},
+
+	clearCoins() {
+		this.coins = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	}
 };
 module.exports = changer;
